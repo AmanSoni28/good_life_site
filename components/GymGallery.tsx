@@ -71,14 +71,15 @@ export default function GymGallery() {
       q(".s-slide").forEach((slide) => {
         const s = gsap.utils.selector(slide);
         const at = (start: string, end: string) => ({ trigger: slide, containerAnimation: move, start, end, scrub: true });
-        gsap.fromTo(s(".s-text"), { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, scrollTrigger: at("left 66%", "left 54%") });
+        gsap.fromTo(s(".s-text"), { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, scrollTrigger: at("left 48%", "left 36%") });
         if (!slide.querySelector(".s-locker")) return; // the closing CTA card
         gsap.fromTo(s(".s-locker"), { yPercent: 25, z: -500, rotateY: -70, autoAlpha: 0 }, { yPercent: 0, z: 0, rotateY: 0, autoAlpha: 1, ease: "power3.out", scrollTrigger: at("left 108%", "left 84%") });
-        gsap.to(s(".s-dial"), { rotate: 270, ease: "power2.inOut", scrollTrigger: at("left 88%", "left 80%") });
-        gsap.to(s(".s-led"), { backgroundColor: "#ffffff", boxShadow: "0 0 12px 4px rgba(255,255,255,.8)", scrollTrigger: at("left 81%", "left 79%") });
-        gsap.to(s(".s-door"), { rotateY: -118, ease: "power2.inOut", scrollTrigger: at("left 80%", "left 58%") });
-        gsap.fromTo(s(".s-inside"), { scale: 1.2, filter: "brightness(.15)" }, { scale: 1, filter: "brightness(1)", scrollTrigger: at("left 78%", "left 56%") });
-        gsap.to(s(".s-light"), { keyframes: [{ opacity: 0.8 }, { opacity: 0.1 }, { opacity: 1 }, { opacity: 0.4 }, { opacity: 1 }], scrollTrigger: at("left 70%", "left 58%") });
+        // timings sit left of 62%, so locker 01 (which starts at ~63% beside the intro) is still shut on load
+        gsap.to(s(".s-dial"), { rotate: 270, ease: "power2.inOut", scrollTrigger: at("left 61%", "left 57%") });
+        gsap.to(s(".s-led"), { backgroundColor: "#ffffff", boxShadow: "0 0 12px 4px rgba(255,255,255,.8)", scrollTrigger: at("left 57%", "left 56%") });
+        gsap.to(s(".s-door"), { rotateY: -118, ease: "power2.inOut", scrollTrigger: at("left 56%", "left 36%") });
+        gsap.fromTo(s(".s-inside"), { scale: 1.2, filter: "brightness(.15)" }, { scale: 1, filter: "brightness(1)", scrollTrigger: at("left 55%", "left 35%") });
+        gsap.to(s(".s-light"), { keyframes: [{ opacity: 0.8 }, { opacity: 0.1 }, { opacity: 1 }, { opacity: 0.4 }, { opacity: 1 }], scrollTrigger: at("left 48%", "left 36%") });
       });
     },
     [flat],
@@ -179,7 +180,7 @@ export default function GymGallery() {
     <section ref={ref} id="gallery" className="relative overflow-hidden bg-ink">
       {flat ? (
         // reduced motion: calm grid, no doors
-        <div className="mx-auto max-w-[1300px] px-5 py-28">
+        <div className="mx-auto max-w-[1440px] px-5 py-28 md:px-10">
           <h2 className="display mb-12 text-center text-[clamp(2.75rem,6vw,5.5rem)]">
             Real floors. <span className="text-brand">Real</span> sweat.
           </h2>
@@ -197,19 +198,29 @@ export default function GymGallery() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_35%_60%_at_50%_0%,rgba(255,255,255,.07),transparent_70%),radial-gradient(ellipse_50%_35%_at_50%_85%,rgba(237,37,30,.14),transparent_70%)]" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-black to-transparent" />
 
-          <div className="absolute inset-x-0 top-[5svh] z-20 px-5 text-center">
-            <p className="flex items-center justify-center gap-4 font-head text-[0.65rem] uppercase tracking-[0.45em] text-mist">
-              <span className="h-px w-10 bg-brand" />
-              The Locker Room
-              <span className="h-px w-10 bg-brand" />
-            </p>
-            <h2 className="display mt-2 text-[clamp(1.75rem,3.5vw,3rem)] tracking-[0.04em]">
-              Real floors. <span className="text-brand">Real</span> sweat.
-            </h2>
-          </div>
-
-          {/* one line of lockers; pl = 100vw so the first one swings in from the right edge */}
-          <ul className="s-track relative z-10 flex h-full w-max items-center gap-10 pl-[100vw] pr-[12vw] pt-[9svh] will-change-transform md:gap-16">
+          {/* one line: intro panel first, so the opening screen has the title with locker 01 waiting beside it */}
+          <ul className="s-track relative z-10 flex h-full w-max items-center gap-4 pr-[12vw] will-change-transform md:gap-6">
+            <li className="flex w-[88vw] shrink-0 flex-col justify-center pl-5 pr-8 md:w-[62vw] md:pl-[max(2.5rem,calc((100vw-1440px)/2+2.5rem))] md:pr-16">
+              <p className="flex items-center gap-4 font-head text-[0.65rem] uppercase tracking-[0.45em] text-mist md:text-xs">
+                <span className="h-px w-10 bg-brand" />
+                The Locker Room
+              </p>
+              <h2 className="display mt-5 text-[clamp(3.25rem,7.5vw,8rem)] leading-[0.88]">
+                Real floors.
+                <br />
+                <span className="text-brand">Real</span> sweat.
+              </h2>
+              <p className="mt-6 max-w-sm text-sm leading-relaxed text-mist md:text-base">
+                Ten lockers, ten corners of the club. Every image was captured inside Good Life Fitness Club — no stock photography.
+              </p>
+              <p className="mt-10 flex items-center gap-4 font-head text-[0.65rem] uppercase tracking-[0.4em] text-white/70 md:text-xs">
+                Scroll to unlock
+                <span className="relative h-px w-16 overflow-hidden bg-white/15">
+                  <span className="absolute inset-y-0 left-0 w-1/2 animate-pulse bg-brand" />
+                </span>
+                <span className="text-brand">→</span>
+              </p>
+            </li>
             {ITEMS.map((it, i) => (
               <li key={it.src} className="s-slide flex flex-col items-center [perspective:1400px]">
                 <div className="relative">
