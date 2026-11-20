@@ -37,16 +37,16 @@ export default function GymNavbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color,padding] duration-500 ${
-        scrolled && !open ? "border-b border-white/5 bg-ink/80 py-2.5 backdrop-blur-md" : "border-b border-transparent py-4 md:py-6"
+        scrolled && !open ? "border-b border-gold/15 bg-ink/75 py-2.5 shadow-[0_10px_40px_-20px_rgba(0,0,0,.9)] backdrop-blur-xl" : "border-b border-transparent py-4 md:py-6"
       }`}
     >
-      <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-5 md:px-10" aria-label="Main">
+      <nav className="mx-auto flex items-center justify-between px-5 md:px-10" aria-label="Main">
         <a href="#home" onClick={(e) => go(e, "#home")} className="relative z-10 flex items-center gap-3" aria-label="Good Life Fitness Club — home">
           <Image id="nav-logo" src={`${A}/logo.png`} alt="" width={52} height={52} priority className="h-11 w-11 rounded-full md:h-[52px] md:w-[52px]" />
           <span className="hidden font-head text-[0.7rem] font-medium uppercase leading-tight tracking-[0.28em] sm:block">
             Good <span className="text-brand">Life</span>
             <br />
-            <span className="text-mist">Fitness Club</span>
+            <span className="text-champagne/70">Fitness Club</span>
           </span>
         </a>
 
@@ -59,7 +59,7 @@ export default function GymNavbar() {
                 className="group relative py-2 font-head text-[0.78rem] uppercase tracking-[0.22em] text-white/80 transition hover:text-white"
               >
                 {n.label}
-                <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-brand transition-transform duration-500 group-hover:origin-left group-hover:scale-x-100" />
+                <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-gradient-to-r from-gold-light to-gold transition-transform duration-500 group-hover:origin-left group-hover:scale-x-100" />
               </a>
             </li>
           ))}
@@ -106,7 +106,7 @@ export default function GymNavbar() {
                 }`}
                 style={{ transitionDelay: open ? `${150 + i * 60}ms` : "0ms" }}
               >
-                <span className="font-head text-xs tracking-widest text-brand">0{i + 1}</span>
+                <span className="font-head text-xs tracking-widest text-gold">0{i + 1}</span>
                 {n.label}
               </a>
             </li>

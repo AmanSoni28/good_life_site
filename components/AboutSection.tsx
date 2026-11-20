@@ -54,7 +54,7 @@ export default function AboutSection() {
       <span className="pointer-events-none absolute -left-4 top-10 select-none font-display text-[28vw] leading-none text-white/[0.025]" aria-hidden>
         GOOD LIFE
       </span>
-      <div className="relative mx-auto grid max-w-[1440px] gap-16 px-5 md:px-10 lg:grid-cols-12 lg:gap-10">
+      <div className="relative mx-auto grid gap-16 px-5 md:px-10 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-7">
           <p className="eyebrow mb-8">Why Good Life</p>
           <h2 className="a-title display text-[clamp(3.2rem,9vw,8.5rem)]">

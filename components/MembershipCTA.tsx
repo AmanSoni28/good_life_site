@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRef } from "react";
+import { openJoin } from "./JoinForm";
 import { WhatsAppIcon } from "./WhatsAppButton";
 import { gsap, reduced, ScrollTrigger, useGsap } from "@/lib/motion";
 import { A, INSTAGRAM_HANDLE, INSTAGRAM_URL, JOIN_MESSAGE, PHONE_DISPLAY, TEL_URL, WHATSAPP_URL, whatsapp } from "@/lib/site";
@@ -96,13 +97,13 @@ export default function MembershipCTA() {
   });
 
   // magnetic orb button
-  const magnet = (e: React.PointerEvent<HTMLAnchorElement>) => {
+  const magnet = (e: React.PointerEvent<HTMLElement>) => {
     if (e.pointerType !== "mouse") return;
     const el = e.currentTarget;
     const r = el.getBoundingClientRect();
     gsap.to(el, { x: (e.clientX - r.left - r.width / 2) * 0.35, y: (e.clientY - r.top - r.height / 2) * 0.35, duration: 0.5, ease: "power3.out" });
   };
-  const release = (e: React.PointerEvent<HTMLAnchorElement>) => gsap.to(e.currentTarget, { x: 0, y: 0, duration: 0.9, ease: "elastic.out(1,0.35)" });
+  const release = (e: React.PointerEvent<HTMLElement>) => gsap.to(e.currentTarget, { x: 0, y: 0, duration: 0.9, ease: "elastic.out(1,0.35)" });
 
   // member pass: 3D tilt + holographic sheen follow the pointer
   const passMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -139,7 +140,7 @@ export default function MembershipCTA() {
         </div>
 
         {/* content */}
-        <div className="m-content relative z-10 mx-auto w-full max-w-[1440px] px-5 py-28 md:px-10 md:py-14">
+        <div className="m-content relative z-10 mx-auto w-full px-5 py-28 md:px-10 md:py-14">
           <div className="grid items-center gap-12 lg:grid-cols-12">
             <div className="lg:col-span-8">
               <p className="m-fade eyebrow mb-7">Membership</p>
@@ -225,18 +226,18 @@ export default function MembershipCTA() {
                         <textPath href="#orb-circle">{ORBIT}</textPath>
                       </text>
                     </svg>
-                    <a
-                      href={whatsapp(JOIN_MESSAGE)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      onClick={openJoin}
                       onPointerMove={magnet}
                       onPointerLeave={release}
-                      aria-label="Join Good Life on WhatsApp"
+                      aria-haspopup="dialog"
+                      aria-label="Join Good Life — open the membership form"
                       className="group relative grid h-24 w-24 place-items-center rounded-full bg-brand shadow-[0_0_50px_rgba(237,37,30,.6)] transition-[box-shadow] duration-500 hover:shadow-[0_0_90px_rgba(237,37,30,.9)]"
                     >
                       <span className="absolute inset-0 rounded-full border border-brand [animation:pulse-ring_2.6s_ease-out_infinite]" aria-hidden />
                       <span className="display text-3xl leading-none transition-transform duration-500 group-hover:scale-110">Join</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -111,7 +111,7 @@ export default function HeroSection() {
         ))}
       </div>
 
-      <div className="h-content relative z-10 mx-auto w-full max-w-[1440px] px-5 pb-32 md:px-10 md:pb-36 xl:pl-24">
+      <div className="h-content relative z-10 mx-auto w-full px-5 pb-32 md:px-10 md:pb-36 xl:pl-24">
         <p className="h-fade eyebrow mb-6">Unisex gym · Three floors</p>
         <h1 aria-label="Build your stronger self." className="h-title display text-[clamp(3.6rem,14vw,13rem)] [perspective:900px]">
           <span aria-hidden className="block overflow-hidden pb-[0.05em]">

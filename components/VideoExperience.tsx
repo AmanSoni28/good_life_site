@@ -43,7 +43,7 @@ export default function VideoExperience() {
       {/* soft red halo behind the hero clip */}
       <div className="pointer-events-none absolute left-1/2 top-[58%] h-[60vh] w-[60vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/20 blur-[120px]" aria-hidden />
 
-      <div className="relative z-10 mx-auto max-w-[1440px] px-5 text-center md:px-10">
+      <div className="relative z-10 mx-auto px-5 text-center md:px-10">
         <p className="flex items-center justify-center gap-4 font-head text-xs uppercase tracking-[0.45em] text-mist">
           <span className="h-px w-10 bg-brand" />
           The Experience
@@ -55,7 +55,7 @@ export default function VideoExperience() {
         </h2>
       </div>
 
-      <div className="relative z-10 mx-auto mt-16 flex max-w-[1440px] items-center justify-center gap-6 px-5 md:px-10 md:mt-24 md:gap-12">
+      <div className="relative z-10 mx-auto mt-16 flex items-center justify-center gap-6 px-5 md:px-10 md:mt-24 md:gap-12">
         <Frame n="01" caption="Cardio" className="v-side-a hidden w-[17vw] max-w-[230px] opacity-80 lg:block">
           <LazyVideo {...V("women-cardio")} label="Cardio and core training at Good Life" className="h-full w-full object-cover" />
         </Frame>

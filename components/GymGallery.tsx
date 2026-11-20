@@ -180,7 +180,7 @@ export default function GymGallery() {
     <section ref={ref} id="gallery" className="relative overflow-hidden bg-ink">
       {flat ? (
         // reduced motion: calm grid, no doors
-        <div className="mx-auto max-w-[1440px] px-5 py-28 md:px-10">
+        <div className="mx-auto px-5 py-28 md:px-10">
           <h2 className="display mb-12 text-center text-[clamp(2.75rem,6vw,5.5rem)]">
             Real floors. <span className="text-brand">Real</span> sweat.
           </h2>
@@ -200,7 +200,7 @@ export default function GymGallery() {
 
           {/* one line: intro panel first, so the opening screen has the title with locker 01 waiting beside it */}
           <ul className="s-track relative z-10 flex h-full w-max items-center gap-4 pr-[12vw] will-change-transform md:gap-6">
-            <li className="flex w-[88vw] shrink-0 flex-col justify-center pl-5 pr-8 md:w-[62vw] md:pl-[max(2.5rem,calc((100vw-1440px)/2+2.5rem))] md:pr-16">
+            <li className="flex w-[88vw] shrink-0 flex-col justify-center pl-5 pr-8 md:w-[62vw] md:pl-10 md:pr-16">
               <p className="flex items-center gap-4 font-head text-[0.65rem] uppercase tracking-[0.45em] text-mist md:text-xs">
                 <span className="h-px w-10 bg-brand" />
                 The Locker Room

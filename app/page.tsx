@@ -5,6 +5,7 @@ import GymGallery from "@/components/GymGallery";
 import GymNavbar from "@/components/GymNavbar";
 import HeroSection from "@/components/HeroSection";
 import IntroAnimation from "@/components/IntroAnimation";
+import JoinForm from "@/components/JoinForm";
 import MembershipCTA from "@/components/MembershipCTA";
 import SmoothScroll from "@/components/SmoothScroll";
 import ThreeFloorExperience from "@/components/ThreeFloorExperience";
@@ -28,6 +29,7 @@ export default function Home() {
       </main>
       <GymFooter />
       <WhatsAppButton />
+      <JoinForm />
     </>
   );
 }

@@ -112,7 +112,7 @@ export default function ThreeFloorExperience() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(0,0,0,.55)_100%)]" />
 
         {/* copy column */}
-        <div className="absolute inset-x-5 bottom-10 md:inset-x-10 md:bottom-auto md:top-1/2 md:-translate-y-1/2 lg:left-[max(2.5rem,calc((100vw-1440px)/2+2.5rem))] md:max-w-[min(44vw,560px)]">
+        <div className="absolute inset-x-5 bottom-10 md:inset-x-10 md:bottom-auto md:top-1/2 md:-translate-y-1/2 lg:left-10 md:max-w-[min(44vw,560px)]">
           <div className="relative">
             <div className="fl-intro">
               <p className="line mb-5"><span><span className="eyebrow">The building</span></span></p>

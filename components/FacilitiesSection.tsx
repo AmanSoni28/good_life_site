@@ -131,7 +131,7 @@ export default function FacilitiesSection() {
         </span>
         <div className="pointer-events-none absolute -bottom-40 left-[30%] h-[60vh] w-[50vw] rounded-full bg-brand/10 blur-[120px]" aria-hidden />
 
-        <div className="relative mx-auto mb-10 flex w-full max-w-[1440px] flex-col gap-8 px-5 md:px-10 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="relative mx-auto mb-10 flex w-full flex-col gap-8 px-5 md:px-10 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="eyebrow mb-6">Facilities &amp; training</p>
             <h2 className="f-title display text-[clamp(3rem,5.4vw,5.6rem)]">
@@ -153,7 +153,7 @@ export default function FacilitiesSection() {
           </div>
         </div>
 
-        <ul className="f-track relative flex snap-x snap-mandatory items-center gap-6 overflow-x-auto px-5 pb-6 [scrollbar-width:none] md:px-10 lg:snap-none lg:overflow-visible lg:pb-0 lg:pl-[max(2.5rem,calc((100vw-1440px)/2+2.5rem))]">
+        <ul className="f-track relative flex snap-x snap-mandatory items-center gap-6 overflow-x-auto px-5 pb-6 [scrollbar-width:none] md:px-10 lg:snap-none lg:overflow-visible lg:pb-0 lg:pl-10">
           {CARDS.map((c, i) => {
             const on = i === active;
             return (
@@ -241,7 +241,7 @@ export default function FacilitiesSection() {
           <li className="hidden w-[20vw] shrink-0 lg:block" aria-hidden />
         </ul>
 
-        <div className="relative mx-auto mt-8 flex w-full max-w-[1440px] flex-wrap items-center gap-3 px-5 md:px-10 lg:mt-8">
+        <div className="relative mx-auto mt-8 flex w-full flex-wrap items-center gap-3 px-5 md:px-10 lg:mt-8">
           <span className="font-head text-[0.65rem] uppercase tracking-[0.3em] text-mist">Also at the club</span>
           {ALSO.map((a) => (
             <span key={a} className="rounded-full border border-white/15 px-4 py-1.5 font-head text-xs uppercase tracking-[0.18em] text-white/85">
