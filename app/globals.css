@@ -151,6 +151,28 @@ html[data-intro="playing"] #nav-logo {
     border-color: var(--color-brand);
   }
 
+  /* brushed-steel letters with a travelling glint (set per letter so transforms don't break the clip) */
+  .metal {
+    background-image:
+      linear-gradient(110deg, transparent 40%, rgba(255, 255, 255, 0.95) 50%, transparent 60%),
+      linear-gradient(180deg, #fff 0%, #f1f2f4 40%, #8f959c 55%, #dfe2e6 75%, #fff 100%);
+    background-size: 300% 100%, 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: glint 6s ease-in-out infinite;
+  }
+
+  .btn-sheen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
+    background-size: 250% 100%;
+    animation: sweep 4s ease-in-out infinite;
+  }
+
   .grain::before {
     content: "";
     position: absolute;
@@ -183,6 +205,17 @@ html[data-intro="playing"] #nav-logo {
 @keyframes g-caption {
   from { opacity: 0; transform: translateY(14px); clip-path: inset(0 0 100% 0); }
   to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+@keyframes glint {
+  0% { background-position: 200% 0, 0 0; }
+  45%, 100% { background-position: -100% 0, 0 0; }
+}
+@keyframes streak {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(400%); }
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
 }
 @keyframes pulse-ring {
   0% { transform: scale(1); opacity: 0.55; }
