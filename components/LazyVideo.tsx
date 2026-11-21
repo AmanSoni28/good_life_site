@@ -9,19 +9,24 @@ type Props = {
   className?: string;
   /** render a play/pause toggle (parent must be positioned) */
   toggle?: boolean;
+  /** keep the clip paused while true, even on screen (for clips hidden behind another one) */
+  hold?: boolean;
 };
 
 /** Muted, looping, silent video that only loads/plays while on screen. */
-export default function LazyVideo({ src, poster, label, className, toggle }: Props) {
+export default function LazyVideo({ src, poster, label, className, toggle, hold = false }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
   const userPaused = useRef(reduced());
   const [playing, setPlaying] = useState(false);
+  const onScreen = useRef(false);
+  const held = useRef(hold);
 
   useEffect(() => {
     const v = ref.current!;
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) {
+        onScreen.current = e.isIntersecting;
+        if (e.isIntersecting && !held.current) {
           if (!v.getAttribute("src")) v.src = src;
           if (!userPaused.current) v.play().catch(() => {});
         } else v.pause();
@@ -31,6 +36,16 @@ export default function LazyVideo({ src, poster, label, className, toggle }: Pro
     io.observe(v);
     return () => io.disconnect();
   }, [src]);
+
+  useEffect(() => {
+    const v = ref.current!;
+    held.current = hold;
+    if (hold) v.pause();
+    else if (onScreen.current && !userPaused.current) {
+      if (!v.getAttribute("src")) v.src = src;
+      v.play().catch(() => {});
+    }
+  }, [hold, src]);
 
   const flip = () => {
     const v = ref.current!;

@@ -1,0 +1,9 @@
+{
+  // Concept chooser preview on Cloudflare Workers (static files only). Deploy with: npm run deploy
+  "name": "goodlife-concepts",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}

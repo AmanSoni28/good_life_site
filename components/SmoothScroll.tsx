@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import { gsap, reduced, ScrollTrigger, setLenis } from "@/lib/motion";
 
-export default function SmoothScroll() {
+export default function SmoothScroll({ lerp = 0.1 }: { lerp?: number }) {
   useEffect(() => {
     if (reduced()) return;
-    const lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 0.9 });
+    const lenis = new Lenis({ lerp, wheelMultiplier: 0.9 });
     setLenis(lenis);
     lenis.on("scroll", ScrollTrigger.update);
     const tick = (t: number) => lenis.raf(t * 1000);
@@ -29,6 +29,6 @@ export default function SmoothScroll() {
       lenis.destroy();
       setLenis(null);
     };
-  }, []);
+  }, [lerp]);
   return null;
 }

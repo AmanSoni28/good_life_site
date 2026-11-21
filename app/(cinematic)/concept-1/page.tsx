@@ -1,3 +1,4 @@
+import ConceptSwitcher from "@/components/ConceptSwitcher";
 import AboutSection from "@/components/AboutSection";
 import FacilitiesSection from "@/components/FacilitiesSection";
 import GymFooter from "@/components/GymFooter";
@@ -34,6 +35,7 @@ export default function Home() {
       <GymFooter />
       <WhatsAppButton />
       <JoinForm />
+      <ConceptSwitcher current="concept-1" />
     </>
   );
 }

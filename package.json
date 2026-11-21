@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:static": "STATIC_EXPORT=1 next build",
+    "deploy": "npm run build:static && wrangler deploy"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.2",
