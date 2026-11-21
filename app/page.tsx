@@ -6,6 +6,7 @@ import GymNavbar from "@/components/GymNavbar";
 import HeroSection from "@/components/HeroSection";
 import IntroAnimation from "@/components/IntroAnimation";
 import JoinForm from "@/components/JoinForm";
+import MembershipPlans from "@/components/MembershipPlans";
 import MembershipCTA from "@/components/MembershipCTA";
 import SmoothScroll from "@/components/SmoothScroll";
 import ThreeFloorExperience from "@/components/ThreeFloorExperience";
@@ -27,6 +28,7 @@ export default function Home() {
         <VideoExperience />
         <GymGallery />
         <TrainersSection />
+        <MembershipPlans />
         <MembershipCTA />
       </main>
       <GymFooter />

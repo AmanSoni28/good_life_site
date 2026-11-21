@@ -20,5 +20,6 @@ export const NAV = [
   { label: "Three Floors", href: "#floors" },
   { label: "Gallery", href: "#gallery" },
   { label: "Trainers", href: "#trainers" },
+  { label: "Plans", href: "#membership" },
   { label: "Contact", href: "#contact" },
 ] as const;
