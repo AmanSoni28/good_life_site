@@ -89,13 +89,13 @@ export default function TrainersSection() {
     [flat],
   );
 
-  const header = (
-    <div className="mx-auto px-5 pt-28 md:px-10 lg:px-20 md:pt-36">
+  const header = (pad: string) => (
+    <div className={`relative z-10 mx-auto w-full shrink-0 px-5 md:px-10 lg:px-20 ${pad}`}>
       <p className="flex items-center gap-4 font-head text-[0.65rem] uppercase tracking-[0.45em] text-[#c9a45c] md:text-xs">
         <span className={`h-px w-10 ${brass}`} />
         The Coaches
       </p>
-      <h2 className="t-title display mt-5 text-[clamp(3rem,9vw,9rem)] leading-[0.88]">
+      <h2 className="t-title display mt-3 text-[clamp(2.4rem,4.4vw,4.5rem)] leading-[0.9] md:flex md:gap-x-[0.25em]">
         <span className="t-line block overflow-hidden">
           <span className="block">Built by</span>
         </span>
@@ -109,7 +109,7 @@ export default function TrainersSection() {
   if (flat)
     return (
       <section ref={ref} id="trainers" className="relative bg-ink pb-28">
-        {header}
+        {header("pt-28 md:pt-32")}
         <ul className="mx-auto mt-14 grid gap-6 px-5 sm:grid-cols-2 md:px-10 lg:grid-cols-4">
           {COACHES.map((c) => (
             <li key={c.img}>
@@ -128,20 +128,20 @@ export default function TrainersSection() {
 
   return (
     <section ref={ref} id="trainers" className="relative overflow-hidden bg-ink">
-      {header}
-
-      <div className="t-stage relative h-[100svh] overflow-hidden">
+      {/* heading lives inside the pinned stage so title + coach share one screen */}
+      <div className="t-stage relative flex h-[100svh] flex-col overflow-hidden">
+        {header("pt-20 md:pt-24")}
         {/* drifting outlined word + warm brass glow */}
         <p className="t-bg pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 whitespace-nowrap font-display text-[30vw] leading-none text-transparent [-webkit-text-stroke:1px_rgba(201,164,92,.09)]" aria-hidden>
           Coaches · Coaches · Coaches
         </p>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_38%_55%_at_70%_50%,rgba(201,164,92,.16),transparent_70%)]" />
 
-        <div className="relative mx-auto grid h-full grid-rows-[auto_1fr] content-center items-center gap-6 px-5 py-14 md:grid-cols-2 md:grid-rows-1 md:gap-14 md:px-10 lg:px-20">
+        <div className="relative mx-auto grid min-h-0 w-full flex-1 grid-rows-[auto_1fr] content-center items-center gap-4 px-5 pb-6 pt-4 md:grid-cols-2 md:grid-rows-1 md:gap-12 md:px-10 md:pb-8 lg:px-20">
           {/* the plate */}
-          <div className="t-roll flex flex-col items-center gap-6 justify-self-center md:order-2 md:gap-8">
+          <div className="t-roll flex flex-col items-center gap-4 justify-self-center md:order-2 md:gap-6">
             <div className="t-tilt relative [perspective:1200px] [transform-style:preserve-3d]">
-              <div className="relative aspect-square h-[min(44svh,86vw)] rounded-full shadow-[0_60px_120px_-30px_rgba(0,0,0,1),0_0_140px_-30px_rgba(201,164,92,.45)] md:h-[min(68svh,600px)]">
+              <div className="relative aspect-square h-[min(34svh,76vw)] rounded-full shadow-[0_60px_120px_-30px_rgba(0,0,0,1),0_0_140px_-30px_rgba(201,164,92,.45)] md:h-[min(56svh,520px)]">
                 {/* spinning parts: brass rim, grooved face, engraved lettering */}
                 <div className="t-spin absolute inset-0 will-change-transform">
                   <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,#f7e7bd,#c9a45c,#8a6a2f,#e9d199,#a8823f,#f7e7bd,#8a6a2f,#c9a45c,#f7e7bd)]" />
@@ -205,7 +205,7 @@ export default function TrainersSection() {
                     <span className={`h-px w-8 ${brass}`} />
                     <span>{c.role}</span>
                   </p>
-                  <h3 className="display mt-3 text-[clamp(3rem,8vw,8.5rem)] leading-[0.85] md:mt-5">
+                  <h3 className="display mt-3 text-[clamp(2.4rem,5vw,5.25rem)] leading-[0.88] md:mt-4">
                     <span className="block overflow-hidden">
                       <span className={`t-rise block ${hide}`}>{c.first}</span>
                     </span>
@@ -213,15 +213,15 @@ export default function TrainersSection() {
                       <span className={`t-rise block ${brassText} ${hide}`}>{c.last}</span>
                     </span>
                   </h3>
-                  <p className={`t-rise mt-4 max-w-md text-sm leading-relaxed text-mist md:mt-6 md:text-base ${hide}`}>{c.line}</p>
-                  <ul className={`t-rise mt-4 hidden flex-wrap gap-2 sm:flex md:mt-6 ${hide}`}>
+                  <p className={`t-rise mt-3 max-w-md text-sm leading-relaxed text-mist md:mt-5 md:text-base ${hide}`}>{c.line}</p>
+                  <ul className={`t-rise mt-4 hidden flex-wrap gap-2 sm:flex md:mt-5 ${hide}`}>
                     {c.tags.map((t) => (
                       <li key={t} className="rounded-full border border-[#c9a45c]/35 px-4 py-1.5 font-head text-[0.65rem] uppercase tracking-[0.3em] text-[#e9d199]">
                         {t}
                       </li>
                     ))}
                   </ul>
-                  <div className={`t-rise mt-6 md:mt-8 ${hide}`}>
+                  <div className={`t-rise mt-5 md:mt-7 ${hide}`}>
                     <a href={book(c.first)} target="_blank" rel="noopener noreferrer" tabIndex={i === active ? 0 : -1} className="btn btn-primary">
                       Train with {c.first}
                     </a>

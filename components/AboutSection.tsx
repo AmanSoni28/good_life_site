@@ -50,33 +50,34 @@ export default function AboutSection() {
   });
 
   return (
-    <section ref={ref} id="about" className="relative overflow-hidden bg-ink py-28 md:py-44">
+    <section ref={ref} id="about" className="relative overflow-hidden bg-ink py-24 md:py-32">
+      {/* carries the hero's warm red/gold light into this section */}
+      <span className="pointer-events-none absolute left-1/2 top-0 h-72 w-[80vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(237,37,30,.12),rgba(201,164,92,.05)_55%,transparent)]" aria-hidden />
       <span className="pointer-events-none absolute -left-4 top-10 select-none font-display text-[28vw] leading-none text-white/[0.025]" aria-hidden>
         GOOD LIFE
       </span>
       <div className="relative mx-auto grid gap-16 px-5 md:px-10 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-7">
-          <p className="eyebrow mb-8">Why Good Life</p>
-          <h2 className="a-title display text-[clamp(3.2rem,9vw,8.5rem)]">
+          <h2 className="a-title display text-[clamp(2.75rem,5.4vw,5.75rem)]">
             <span className="a-line line"><span>Your journey.</span></span>
             <span className="a-line line"><span className="outline-text">Your strength.</span></span>
             <span className="a-line line"><span>Your <span className="text-brand">good life.</span></span></span>
           </h2>
-          <p className="a-copy mt-12 max-w-2xl text-xl leading-relaxed text-white md:text-2xl">
+          <span className="mt-10 block h-px w-24 bg-gradient-to-r from-gold to-transparent" aria-hidden />
+          <p className="a-copy mt-8 max-w-xl text-base font-light leading-[1.9] tracking-wide text-champagne md:text-lg">
             {COPY.split(" ").map((w, i) => (
               <span key={i} className="a-word">
                 {w}{" "}
               </span>
             ))}
           </p>
-          <dl className="a-facts mt-16 grid grid-cols-3 gap-4 border-t border-white/10 pt-10 md:max-w-2xl">
+          <dl className="a-facts mt-14 grid max-w-xl grid-cols-3 border-y border-gold/20">
             {FACTS.map((f, i) => (
-              <div key={f.label} className="a-fact">
+              <div key={f.label} className={`a-fact py-8 text-center ${i ? "border-l border-gold/20" : ""}`}>
                 <dt className="sr-only">{f.label}</dt>
-                <dd className={`display text-5xl md:text-7xl ${i === 0 ? "text-brand" : ""}`}>
+                <dd className="display gold-text text-4xl md:text-5xl">
                   {i === 0 ? <span className="a-count">{f.value}</span> : f.value}
                 </dd>
-                <dd className="mt-2 font-head text-[0.65rem] uppercase tracking-[0.25em] text-mist md:text-xs">{f.label}</dd>
               </div>
             ))}
           </dl>
@@ -85,10 +86,11 @@ export default function AboutSection() {
         <div className="relative h-[520px] sm:h-[640px] lg:col-span-5 lg:h-auto">
           <div className="a-img absolute right-0 top-0 h-[68%] w-[78%] overflow-hidden">
             <Image src={`${A}/videos/strength-machines.jpg`} alt="Plate-loaded strength machines on the gym floor" fill sizes="(min-width:1024px) 34vw, 78vw" className="object-cover" />
+            <span className="pointer-events-none absolute inset-3 border border-gold/30" aria-hidden />
           </div>
           <div className="a-img absolute bottom-0 left-0 h-[58%] w-[52%] overflow-hidden border-4 border-ink shadow-[0_30px_60px_rgba(0,0,0,.6)]">
             <Image src={`${A}/stills/deadlift.jpg`} alt="A member loading plates for a barbell lift" fill sizes="(min-width:1024px) 22vw, 52vw" className="object-cover" />
-            <span className="absolute left-0 top-0 h-full w-[3px] bg-brand" />
+            <span className="pointer-events-none absolute inset-3 border border-gold/30" aria-hidden />
           </div>
         </div>
       </div>

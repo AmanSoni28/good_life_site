@@ -27,7 +27,7 @@ const finaleOf = (p: number) => ss(p, 0.88, 0.97);
 const floorY = (i: number, e: number) => BASE + i * H + e * i * GAP;
 
 const KEYS: { p: number; pos: [number, number, number]; look: [number, number, number] }[] = [
-  { p: 0, pos: [11, 1.2, 18], look: [0, 4, 0] },
+  { p: 0, pos: [8.6, 1.6, 13.6], look: [0, 4.1, 0] },
   { p: 0.12, pos: [8.5, 3.5, 15], look: [0, 4.6, 0] },
   { p: 0.2, pos: [5.6, 2.8, 8.8], look: [0, 2.05, 1.6] },
   { p: 0.32, pos: [4.6, 2.4, 8.1], look: [0, 2.05, 1.6] },
@@ -61,7 +61,7 @@ function glowTexture() {
   g.fillRect(0, 0, 128, 128);
   return new THREE.CanvasTexture(c);
 }
-function signTexture() {
+function signTexture(level: number) {
   const c = document.createElement("canvas");
   c.width = 2048;
   c.height = 112;
@@ -79,6 +79,10 @@ function signTexture() {
     g.fillText(t, x, 60);
     x += g.measureText(t).width;
   }
+  g.font = `500 54px ${fam}`;
+  g.fillStyle = "#c9a45c";
+  g.fillText(`LEVEL 0${level}`, 70, 60);
+  g.fillText(`0${level}`, c.width - 70 - g.measureText(`0${level}`).width, 60);
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = 8;
@@ -91,16 +95,19 @@ const AMBER = new THREE.Color("#ffb066");
 const RED = new THREE.Color("#ff2a1f");
 
 type Shared = { progress: RefObject<number>; built: RefObject<number> };
+type Ready = { ready: RefObject<boolean> };
 
 function Floor({ i, tex, sign, glow, progress, built }: Shared & { i: number; tex: THREE.Texture; sign: THREE.Texture; glow: THREE.Texture }) {
   const g = useRef<THREE.Group>(null);
   const scan = useRef<THREE.Mesh>(null);
+  const sweep = useRef<THREE.Mesh>(null);
   const m = useMemo(
     () => ({
       glass: new THREE.MeshStandardMaterial({ map: tex, emissiveMap: tex, emissive: "#ffffff", emissiveIntensity: 0, roughness: 0.15, metalness: 0.3 }),
       strip: new THREE.MeshBasicMaterial({ color: AMBER.clone(), toneMapped: false }),
       halo: new THREE.MeshBasicMaterial({ map: glow, color: AMBER.clone(), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
       scan: new THREE.MeshBasicMaterial({ map: glow, color: RED.clone(), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
+      sweep: new THREE.MeshBasicMaterial({ map: glow, color: "#fff1dc", transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
       sign: new THREE.MeshBasicMaterial({ map: sign, toneMapped: false }),
     }),
     [tex, sign, glow],
@@ -130,6 +137,11 @@ function Floor({ i, tex, sign, glow, progress, built }: Shared & { i: number; te
     if (scan.current) {
       scan.current.position.y = 0.12 + ((clock.elapsedTime * 0.45) % 1) * GH;
       m.scan.opacity = fi * 0.9;
+    }
+    if (sweep.current) {
+      const k = (((clock.elapsedTime + 3 - i * 0.25) / 8) % 1) / 0.35; // one pass every 8s, cascading across the floors
+      sweep.current.position.x = THREE.MathUtils.lerp(-W / 2 - 0.6, W / 2 + 0.6, Math.min(k, 1));
+      m.sweep.opacity = k <= 1 ? Math.sin(k * Math.PI) * 0.6 * (1 - e) * ease : 0;
     }
   });
 
@@ -172,6 +184,9 @@ function Floor({ i, tex, sign, glow, progress, built }: Shared & { i: number; te
       ))}
       <mesh material={m.halo} position={[0, 0.12, front + 0.22]}>
         <planeGeometry args={[W + 2.4, 0.9]} />
+      </mesh>
+      <mesh ref={sweep} material={m.sweep} position={[0, 0.12 + GH / 2, front + 0.07]}>
+        <planeGeometry args={[1.1, GH * 1.25]} />
       </mesh>
       <mesh ref={scan} material={m.scan} position={[0, 0.5, front + 0.06]}>
         <planeGeometry args={[W + 0.6, 0.22]} />
@@ -221,16 +236,23 @@ function Rig({ progress }: { progress: RefObject<number> }) {
   // shift the frame: building sits right of the copy on wide screens, above it on phones
   useEffect(() => {
     const cam = camera as THREE.PerspectiveCamera;
-    if (aspect > 1.1) cam.setViewOffset(size.width, size.height, -size.width * 0.17, 0, size.width, size.height);
+    if (aspect > 1.1) cam.setViewOffset(size.width, size.height, -size.width * 0.15, 0, size.width, size.height);
     else cam.setViewOffset(size.width, size.height, 0, size.height * 0.17, size.width, size.height);
     cam.updateProjectionMatrix();
   }, [camera, size, aspect]);
 
-  useFrame(({ pointer }, dt) => {
-    sample(progress.current ?? 0, tp, tl);
+  const still = useMemo(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches, []);
+  useFrame(({ pointer, clock }, dt) => {
+    const p = progress.current ?? 0;
+    sample(p, tp, tl);
     tp.sub(tl).multiplyScalar(dist).add(tl);
     tp.x += pointer.x * 0.7;
     tp.y += pointer.y * 0.4;
+    if (!still) {
+      const hero = 1 - ss(p, 0, 0.1);
+      tp.y += Math.sin(clock.elapsedTime * 0.45) * 0.18 * hero;
+      tp.x += Math.sin(clock.elapsedTime * 0.3) * 0.25 * hero;
+    }
     const k = 1 - Math.pow(0.0015, dt);
     camera.position.lerp(tp, k);
     look.current.lerp(tl, k);
@@ -239,12 +261,26 @@ function Rig({ progress }: { progress: RefObject<number> }) {
   return null;
 }
 
-function Building({ progress, built, lite }: Shared & { lite: boolean }) {
+function Building({ progress, built, lite, ready }: Shared & Ready & { lite: boolean }) {
   const texs = useLoader(THREE.TextureLoader, [1, 2, 3].map((n) => `${A}/floors/floor-${n}.jpg`));
   const glow = useMemo(glowTexture, []);
-  const sign = useMemo(signTexture, []);
+  const signs = useMemo(() => [1, 2, 3].map(signTexture), []);
   const light = useRef<THREE.PointLight>(null);
   const groundGlow = useRef<THREE.MeshBasicMaterial>(null);
+  const beam = useMemo(
+    () => new THREE.MeshBasicMaterial({ map: glow, color: "#ffcf8f", transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
+    [glow],
+  );
+  // spotlight targets must live in the scene or three.js ignores their position
+  const aims = useMemo(
+    () =>
+      [-1, 1].map((s) => {
+        const o = new THREE.Object3D();
+        o.position.set(s * (W / 2 - 0.2), 6, D / 2); // position is read-only, so set it rather than assign
+        return o;
+      }),
+    [],
+  );
 
   useMemo(() => {
     for (const t of texs) {
@@ -264,7 +300,7 @@ function Building({ progress, built, lite }: Shared & { lite: boolean }) {
   }, [texs]);
 
   useFrame((_, dt) => {
-    built.current = Math.min(1, (built.current ?? 0) + dt / 2.6);
+    if (ready.current) built.current = Math.min(1, (built.current ?? 0) + dt / 2.6);
     const p = progress.current ?? 0;
     const e = explodeOf(p);
     let w = 0;
@@ -279,17 +315,29 @@ function Building({ progress, built, lite }: Shared & { lite: boolean }) {
       if (w > 0.01) light.current.position.y = y / w;
     }
     if (groundGlow.current) groundGlow.current.opacity = 0.35 + finaleOf(p) * 0.4;
+    // facade uplights belong to the stacked building; they dim while the floors pull apart
+    beam.opacity = 0.32 * (1 - e) * Math.min(1, (built.current ?? 1) * 1.5);
   });
 
   return (
     <>
       <pointLight ref={light} position={[0, 3, 5.5]} distance={10} color="#ff2a1f" intensity={0} />
+      {/* warm architectural uplights washing the front corners, like a luxury facade at night */}
+      {[-1, 1].map((s) => (
+        <group key={s}>
+          <primitive object={aims[(s + 1) / 2]} />
+          <spotLight position={[s * (W / 2 + 0.6), 0.05, D / 2 + 1.2]} target={aims[(s + 1) / 2]} angle={0.32} penumbra={0.9} distance={11} intensity={26} color="#ffc07a" />
+          <mesh material={beam} position={[s * (W / 2 + 0.25), 3.4, D / 2 + 0.45]}>
+            <planeGeometry args={[1.3, 7.4]} />
+          </mesh>
+        </group>
+      ))}
       {/* podium: lower storeys of the building (other tenants) */}
       <mesh material={shellMat} position={[0, BASE / 2, 0]}>
         <boxGeometry args={[W + 0.3, BASE, D + 0.3]} />
       </mesh>
       {[0, 1, 2].map((i) => (
-        <Floor key={i} i={i} tex={texs[i]} sign={sign} glow={glow} progress={progress} built={built} />
+        <Floor key={i} i={i} tex={texs[i]} sign={signs[i]} glow={glow} progress={progress} built={built} />
       ))}
       {/* ground */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
@@ -305,13 +353,13 @@ function Building({ progress, built, lite }: Shared & { lite: boolean }) {
   );
 }
 
-export default function BuildingScene({ progress, running, lite }: { progress: RefObject<number>; running: boolean; lite: boolean }) {
+export default function BuildingScene({ progress, running, lite, ready }: Ready & { progress: RefObject<number>; running: boolean; lite: boolean }) {
   const built = useRef(lite ? 1 : 0);
   return (
     <Canvas
       frameloop={running ? "always" : "never"}
       dpr={lite ? [1, 1.5] : [1, 1.75]}
-      camera={{ fov: 32, position: [11, 1.2, 18], near: 0.1, far: 120 }}
+      camera={{ fov: 32, position: [8.6, 1.6, 13.6], near: 0.1, far: 120 }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
       onCreated={({ gl, scene }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping;
@@ -323,9 +371,11 @@ export default function BuildingScene({ progress, running, lite }: { progress: R
       <ambientLight intensity={0.35} />
       <hemisphereLight args={["#9fb0ff", "#100404", 0.35]} />
       <directionalLight position={[-8, 14, 10]} intensity={0.7} color="#cdd6ff" />
+      {/* gold rim light from behind picks out the building's edges */}
+      <directionalLight position={[7, 9, -10]} intensity={1.6} color="#e9c98f" />
       <Rig progress={progress} />
       <Suspense fallback={null}>
-        <Building progress={progress} built={built} lite={lite} />
+        <Building progress={progress} built={built} lite={lite} ready={ready} />
       </Suspense>
     </Canvas>
   );
