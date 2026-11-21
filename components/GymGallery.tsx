@@ -13,12 +13,12 @@ const ITEMS: Item[] = [
   { src: "turf-area.jpg", alt: "Covered turf zone with battle ropes and plyo boxes", caption: "Turf zone" },
   { src: "stills/stair-climber.jpg", alt: "Member on the stair climber by the windows", caption: "Stair climber" },
   { src: "videos/strength-machines.jpg", video: "videos/strength-machines.mp4", alt: "Strength machines and plate loading", caption: "Strength zone" },
-  { src: "floors.png", alt: "Good Life Fitness Club facade lit up at night", caption: "After dark" },
+  { src: "floors.jpg", alt: "Good Life Fitness Club facade lit up at night", caption: "After dark" },
   { src: "stills/entrance.jpg", alt: "The neon-lit entrance to the gym", caption: "The entrance" },
   { src: "stills/battle-ropes.jpg", alt: "Member training with battle ropes", caption: "Battle ropes" },
   { src: "stills/chest-press.jpg", alt: "Member training on a strength machine", caption: "Machines" },
   { src: "member-progress.jpg", alt: "Member checking progress in the mirror", caption: "Progress" },
-  { src: "building.png", alt: "The full Good Life Fitness Club building", caption: "Three floors" },
+  { src: "building.jpg", alt: "The full Good Life Fitness Club building", caption: "Three floors" },
 ];
 const N = ITEMS.length;
 const PHOTOS = ITEMS.filter((i) => !i.video);

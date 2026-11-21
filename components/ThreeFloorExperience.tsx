@@ -102,7 +102,7 @@ export default function ThreeFloorExperience() {
         {/* 3D stage */}
         <div className="absolute inset-0">
           {gl && <BuildingScene progress={progress} running={visible} lite={lite} />}
-          {gl === false && <Image src={`${A}/building.png`} alt="The Good Life Fitness Club building at dusk" fill sizes="100vw" className="object-contain object-right opacity-70" />}
+          {gl === false && <Image src={`${A}/building.jpg`} alt="The Good Life Fitness Club building at dusk" fill sizes="100vw" className="object-contain object-right opacity-70" />}
         </div>
 
         {/* legibility + cinematic framing */}

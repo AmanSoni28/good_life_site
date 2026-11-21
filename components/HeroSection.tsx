@@ -26,7 +26,7 @@ export default function HeroSection() {
       .from(".h-img", { scale: 1.45, duration: 2.6, ease: "expo.out" }, 0.2)
       .from(".h-ch", { yPercent: 120, rotateX: -95, opacity: 0, transformOrigin: "50% 100%", duration: 1.3, stagger: 0.035, ease: "power4.out" }, 0.9)
       .from(".h-rule", { scaleX: 0, transformOrigin: "left", duration: 1.2, ease: "expo.inOut" }, 1.2)
-      .from(".h-fade", { y: 30, opacity: 0, filter: "blur(8px)", duration: 1, stagger: 0.1, ease: "power3.out" }, 1.4)
+      .from(".h-fade", { y: 30, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out" }, 1.4)
       .from(".h-hud", { opacity: 0, duration: 1.2, stagger: 0.1 }, 1.6)
       .from(".h-ticker", { yPercent: 100, duration: 1.1, ease: "expo.out" }, 1.5)
       .from(".h-card", { opacity: 0, y: 120, rotationY: -40, duration: 1.6, ease: "expo.out" }, 1.3)
@@ -53,7 +53,7 @@ export default function HeroSection() {
       imgX(dx * -30);
       imgY(dy * -20);
       txtX(dx * 18);
-      gsap.to(el, { "--mx": `${e.clientX - r.left}px`, "--my": `${e.clientY - r.top}px`, duration: 0.8, ease: "power3" });
+      gsap.to(el, { "--mx": `${e.clientX - r.left}px`, "--my": `${e.clientY - r.top}px`, duration: 0.8, ease: "power3", overwrite: true });
     };
     el.addEventListener("pointermove", move);
     return () => {
@@ -174,7 +174,7 @@ export default function HeroSection() {
       </div>
 
       {/* infinite ticker */}
-      <div className="h-ticker absolute inset-x-0 bottom-0 z-10 overflow-hidden border-t border-white/10 bg-black/50 py-3 backdrop-blur-md" aria-hidden>
+      <div className="h-ticker absolute inset-x-0 bottom-0 z-10 overflow-hidden border-t border-white/10 bg-black/70 py-3" aria-hidden>
         <div className="flex w-max [animation:marquee_32s_linear_infinite]">
           {[0, 1].map((k) => (
             <div key={k} className="flex shrink-0 items-center">

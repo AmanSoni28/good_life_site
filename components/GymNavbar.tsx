@@ -36,8 +36,8 @@ export default function GymNavbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color,padding] duration-500 ${
-        scrolled && !open ? "border-b border-gold/15 bg-ink/75 py-2.5 shadow-[0_10px_40px_-20px_rgba(0,0,0,.9)] backdrop-blur-xl" : "border-b border-transparent py-4 md:py-6"
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,padding] duration-500 ${
+        scrolled && !open ? "border-b border-gold/15 bg-ink/85 py-2.5 shadow-[0_10px_40px_-20px_rgba(0,0,0,.9)] backdrop-blur-md" : "border-b border-transparent py-4 md:py-6"
       }`}
     >
       <nav className="mx-auto flex items-center justify-between px-5 md:px-10" aria-label="Main">

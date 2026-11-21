@@ -53,7 +53,7 @@ export default function MembershipCTA() {
         .fromTo(".m-frame", { opacity: 1 }, { opacity: 0, scale: 1.25, duration: 0.3, ease: "power2.in" }, 0.05)
         .fromTo(".m-intro", { opacity: 1, scale: 1, letterSpacing: "0.02em" }, { opacity: 0, scale: 0.9, letterSpacing: "0.12em", duration: 0.25, ease: "power2.in" }, 0.12)
         .fromTo(".m-shade", { opacity: 0.55 }, { opacity: 1, duration: 0.3 }, 0.25)
-        .fromTo(".m-bg-img", { filter: "blur(0px) brightness(.75) saturate(.8)" }, { filter: "blur(5px) brightness(.7) saturate(1)", duration: 0.25 }, 0.3)
+        .fromTo(".m-bg-img", { filter: "brightness(.75) saturate(.8)" }, { filter: "brightness(.55) saturate(1)", duration: 0.25 }, 0.3)
         .from(".m-line > span", { yPercent: 115, stagger: 0.04, duration: 0.14, ease: "power3.out" }, 0.48)
         .from(".m-fade", { y: 40, opacity: 0, stagger: 0.035, duration: 0.14, ease: "power3.out" }, 0.56)
         .from(".m-pass", { y: 140, rotationX: 55, opacity: 0, duration: 0.2, ease: "power3.out" }, 0.52)
@@ -64,7 +64,7 @@ export default function MembershipCTA() {
 
     // MOBILE / reduced motion: no pin, simple entrance
     mm.add("(max-width: 767px), (prefers-reduced-motion: reduce)", () => {
-      gsap.set(".m-bg-img", { filter: "blur(5px) brightness(.7)" });
+      gsap.set(".m-bg-img", { filter: "brightness(.55)" });
       if (reduced()) return;
       gsap.from(".m-line > span", { yPercent: 115, stagger: 0.1, duration: 1.1, ease: "power4.out", scrollTrigger: { trigger: ".m-content", start: "top 80%" } });
       gsap.from([".m-fade", ".m-pass", ".m-card"], { y: 40, opacity: 0, stagger: 0.08, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: ".m-content", start: "top 70%" } });
@@ -131,7 +131,7 @@ export default function MembershipCTA() {
       <div className="m-stage relative flex min-h-[100svh] items-center overflow-hidden">
         {/* real club photography, inside a window that opens on scroll (desktop) */}
         <div className="m-window absolute inset-0 overflow-hidden">
-          <Image src={`${A}/floors.png`} alt="" fill sizes="100vw" className="m-bg-img object-cover object-[50%_50%]" aria-hidden />
+          <Image src={`${A}/floors.jpg`} alt="" fill sizes="100vw" className="m-bg-img object-cover object-[50%_50%]" aria-hidden />
           <div className="m-shade absolute inset-0">
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,8,.96)_0%,rgba(8,8,8,.82)_45%,rgba(8,8,8,.6)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,#080808_0%,rgba(8,8,8,0)_28%,rgba(8,8,8,0)_68%,#080808_100%)]" />

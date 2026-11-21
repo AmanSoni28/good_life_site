@@ -8,7 +8,7 @@ import { A } from "@/lib/site";
  * (public/assets/good-life/intro/*.png), placed at their exact logo coordinates, so the final
  * composition lines up 1:1 with the real logo before it crossfades in.
  */
-const L = 4096; // logo.png is 4096x4096
+const L = 4096; // cut-out coords are in the original 4096px logo space (file is now 1600px; only ratios matter)
 const box = (x0: number, y0: number, x1: number, y1: number) => ({
   left: `${(x0 / L) * 100}%`,
   top: `${(y0 / L) * 100}%`,
@@ -99,8 +99,8 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
       const len = wave.getTotalLength();
       const ghostOpacity = (i: number) => (i === 0 ? 1 : 0.3 - i * 0.08);
 
-      gsap.set(F, { x: -0.32 * S - vw * 0.7, rotationY: 60, opacity: 0, filter: "blur(14px)", scale: 1.12 });
-      gsap.set(M, { x: 0.3 * S + vw * 0.7, y: -0.1 * S, rotationY: -60, rotation: -6, opacity: 0, filter: "blur(14px)", scale: 1.15 });
+      gsap.set(F, { x: -0.32 * S - vw * 0.7, rotationY: 60, opacity: 0, scale: 1.12 });
+      gsap.set(M, { x: 0.3 * S + vw * 0.7, y: -0.1 * S, rotationY: -60, rotation: -6, opacity: 0, scale: 1.15 });
       gsap.set(".i-chain", { clipPath: "inset(0% 50% 0% 50%)", opacity: 0 });
       gsap.set(".i-logo", { opacity: 0, clipPath: "circle(0% at 50% 27%)" });
       gsap.set(".i-edge", { opacity: 0 });
@@ -120,12 +120,12 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
         .to(wave, { strokeDashoffset: 0, duration: 1.3, ease: "power1.inOut" }, 0.5)
 
         // SCENE 2 — female athlete enters from the left (glide, motion trail)
-        .to(F, { x: -0.32 * S, rotationY: 0, rotation: 0, opacity: ghostOpacity, filter: "blur(0px)", scale: 1, duration: 1.15, ease: "expo.out", stagger: 0.07 }, 1.35)
+        .to(F, { x: -0.32 * S, rotationY: 0, rotation: 0, opacity: ghostOpacity, scale: 1, duration: 1.15, ease: "expo.out", stagger: 0.07 }, 1.35)
         .fromTo(".i-streak-w", { xPercent: -110, opacity: 1 }, { xPercent: 260, opacity: 0, duration: 0.9, ease: "power2.out" }, 1.3)
         .to(F.slice(1), { opacity: 0, duration: 0.4 }, 2.35)
 
         // SCENE 3 — male athlete drops in from the right (heavier, impact landing)
-        .to(M, { x: 0.3 * S, y: 0, rotationY: 0, rotation: 0, opacity: ghostOpacity, filter: "blur(0px)", scale: 1, duration: 0.95, ease: "power4.out", stagger: 0.06 }, 2.25)
+        .to(M, { x: 0.3 * S, y: 0, rotationY: 0, rotation: 0, opacity: ghostOpacity, scale: 1, duration: 0.95, ease: "power4.out", stagger: 0.06 }, 2.25)
         .fromTo(".i-streak-r", { xPercent: 260, opacity: 1 }, { xPercent: -110, opacity: 0, duration: 0.9, ease: "power2.out" }, 2.2)
         .to(M[0], { scaleY: 0.94, scaleX: 1.04, transformOrigin: "50% 100%", duration: 0.1, ease: "power2.in" }, 3.0)
         .to(M[0], { scaleY: 1, scaleX: 1, duration: 0.55, ease: "elastic.out(1,0.4)" }, 3.1)
@@ -183,6 +183,10 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
       }
 
       t.timeScale(lite ? 1.75 : 1.5); // ~5s desktop, ~4.4s mobile
+      // decode the cut-outs before playing so the athletes don't hitch on first paint (capped at 1.2s)
+      t.pause();
+      const ready = Promise.all((q("img") as HTMLImageElement[]).map((i) => i.decode().catch(() => {})));
+      Promise.race([ready, new Promise((r) => setTimeout(r, 1200))]).then(() => t.play());
     }, el);
     return () => ctx.revert();
   }, [announce, finish, onDone]);
@@ -194,7 +198,7 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
       src={src}
       alt=""
       draggable={false}
-      className={`${cls} absolute max-w-none select-none ${i ? "i-ghost max-md:hidden" : ""}`}
+      className={`${cls} absolute max-w-none select-none will-change-transform ${i ? "i-ghost max-md:hidden" : ""}`}
       style={{ ...pos, zIndex: i ? 0 : 2 }}
     />
   );
@@ -221,9 +225,9 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
       <svg className="i-wave pointer-events-none absolute left-0 top-[60%] h-[120px] w-full -translate-y-1/2 opacity-0" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden>
         <path d={WAVE} fill="none" stroke="#ED251E" strokeWidth="1.6" vectorEffect="non-scaling-stroke" style={{ filter: "drop-shadow(0 0 6px rgba(237,37,30,.9))" }} />
       </svg>
-      <div className="i-streak-w pointer-events-none absolute left-0 top-[46%] h-[2px] w-[45vw] bg-gradient-to-r from-transparent via-white to-transparent opacity-0 shadow-[0_0_20px_rgba(255,255,255,.9)]" />
-      <div className="i-streak-r pointer-events-none absolute left-0 top-[54%] h-[2px] w-[45vw] bg-gradient-to-r from-transparent via-brand to-transparent opacity-0 shadow-[0_0_20px_rgba(237,37,30,.9)]" />
-      <div className="i-redsweep pointer-events-none absolute left-1/4 top-1/2 h-[70vmin] w-1/2 -translate-y-1/2 rounded-full bg-brand/40 opacity-0 blur-[90px]" />
+      <div className="i-streak-w pointer-events-none will-change-transform absolute left-0 top-[46%] h-[2px] w-[45vw] bg-gradient-to-r from-transparent via-white to-transparent opacity-0 shadow-[0_0_20px_rgba(255,255,255,.9)]" />
+      <div className="i-streak-r pointer-events-none will-change-transform absolute left-0 top-[54%] h-[2px] w-[45vw] bg-gradient-to-r from-transparent via-brand to-transparent opacity-0 shadow-[0_0_20px_rgba(237,37,30,.9)]" />
+      <div className="i-redsweep pointer-events-none absolute left-1/4 top-1/2 h-[70vmin] w-1/2 -translate-y-1/2 rounded-full bg-brand/40 opacity-0 blur-[90px] will-change-transform" />
 
       <div className="absolute inset-0 grid place-items-center [perspective:1200px]">
         <div className="i-stage relative aspect-square w-[min(84vmin,620px)]">
@@ -240,7 +244,7 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
                 }}
               />
             ))}
-            <div className="i-figs absolute inset-0 [perspective:900px] [transform:translateZ(.5px)] [filter:drop-shadow(0_0_22px_rgba(237,37,30,.35))]">
+            <div className="i-figs absolute inset-0 [perspective:900px] [transform:translateZ(.5px)]">
               {Array.from({ length: GHOSTS + 1 }, (_, i) => fig(`${A}/intro/female.png`, FEMALE, "i-f", i))}
               {Array.from({ length: GHOSTS + 1 }, (_, i) => fig(`${A}/intro/male.png`, MALE, "i-m", i))}
               {/* eslint-disable-next-line @next/next/no-img-element */}
