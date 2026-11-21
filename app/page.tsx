@@ -9,6 +9,7 @@ import JoinForm from "@/components/JoinForm";
 import MembershipCTA from "@/components/MembershipCTA";
 import SmoothScroll from "@/components/SmoothScroll";
 import ThreeFloorExperience from "@/components/ThreeFloorExperience";
+import TrainersSection from "@/components/TrainersSection";
 import VideoExperience from "@/components/VideoExperience";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
@@ -25,6 +26,7 @@ export default function Home() {
         <ThreeFloorExperience />
         <VideoExperience />
         <GymGallery />
+        <TrainersSection />
         <MembershipCTA />
       </main>
       <GymFooter />
