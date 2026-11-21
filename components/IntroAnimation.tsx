@@ -132,34 +132,31 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
         .to(".i-cam", { x: "+=6", yoyo: true, repeat: 5, duration: 0.04, ease: "none" }, 3.0)
         .to(M.slice(1), { opacity: 0, duration: 0.35 }, 3.05)
 
-        // SCENE 4 — synchronised reps, then they charge, cross and lock back-to-back
-        .to([F[0], M[0]], { rotation: (i) => (i ? 3.5 : -3.5), y: -0.012 * S, transformOrigin: "50% 100%", duration: 0.24, yoyo: true, repeat: 3, ease: "sine.inOut" }, 3.55)
-        .to(".i-wave", { scaleY: 2.2, duration: 0.24, yoyo: true, repeat: 3, ease: "sine.inOut" }, 3.55)
-        .to(".i-glow", { scale: 1.18, duration: 0.24, yoyo: true, repeat: 3, ease: "sine.inOut" }, 3.55)
-        .set([...F.slice(1), ...M.slice(1)], { opacity: (i) => 0.24 - (i % GHOSTS) * 0.07 }, 4.55)
-        .to(F, { x: 0, duration: 0.8, ease: "power3.inOut", stagger: 0.05 }, 4.55)
-        .to(M, { x: 0, duration: 0.8, ease: "power3.inOut", stagger: 0.05 }, 4.55)
-        .fromTo(".i-streak-w", { xPercent: -110, opacity: 1 }, { xPercent: 260, opacity: 0, duration: 0.7, ease: "power2.inOut" }, 4.6)
-        .fromTo(".i-streak-r", { xPercent: 260, opacity: 1 }, { xPercent: -110, opacity: 0, duration: 0.7, ease: "power2.inOut" }, 4.6)
-        .fromTo(".i-flash", { opacity: 0 }, { opacity: 0.45, duration: 0.08, yoyo: true, repeat: 1, ease: "none" }, 4.92)
-        .to([...F.slice(1), ...M.slice(1)], { opacity: 0, duration: 0.3 }, 5.35)
-        .fromTo(".i-ring", { scale: 0.2, opacity: 0.9 }, { scale: 3, opacity: 0, duration: 1.1, ease: "power2.out" }, 5.3)
-        .to(".i-chain", { clipPath: "inset(0% 0% 0% 0%)", opacity: 1, duration: 0.7, ease: "power2.out" }, 5.3)
-        .to(".i-cam", { y: "+=5", yoyo: true, repeat: 3, duration: 0.04, ease: "none" }, 5.3)
+        // SCENE 4 — they charge, cross and lock back-to-back
+        .set([...F.slice(1), ...M.slice(1)], { opacity: (i) => 0.24 - (i % GHOSTS) * 0.07 }, 3.65)
+        .to(F, { x: 0, duration: 0.8, ease: "power3.inOut", stagger: 0.05 }, 3.65)
+        .to(M, { x: 0, duration: 0.8, ease: "power3.inOut", stagger: 0.05 }, 3.65)
+        .fromTo(".i-streak-w", { xPercent: -110, opacity: 1 }, { xPercent: 260, opacity: 0, duration: 0.7, ease: "power2.inOut" }, 3.7)
+        .fromTo(".i-streak-r", { xPercent: 260, opacity: 1 }, { xPercent: -110, opacity: 0, duration: 0.7, ease: "power2.inOut" }, 3.7)
+        .fromTo(".i-flash", { opacity: 0 }, { opacity: 0.45, duration: 0.08, yoyo: true, repeat: 1, ease: "none" }, 4.02)
+        .to([...F.slice(1), ...M.slice(1)], { opacity: 0, duration: 0.3 }, 4.45)
+        .fromTo(".i-ring", { scale: 0.2, opacity: 0.9 }, { scale: 3, opacity: 0, duration: 1.1, ease: "power2.out" }, 4.4)
+        .to(".i-chain", { clipPath: "inset(0% 0% 0% 0%)", opacity: 1, duration: 0.7, ease: "power2.out" }, 4.4)
+        .to(".i-cam", { y: "+=5", yoyo: true, repeat: 3, duration: 0.04, ease: "none" }, 4.4)
 
         // SCENE 5 — exact logo reveal: 3D medallion, camera push, red light + metallic sheen
-        .to(".i-logo", { opacity: 1, clipPath: "circle(75% at 50% 27%)", duration: 1.1, ease: "power2.inOut" }, 5.8)
-        .to(".i-edge", { opacity: 1, duration: 0.6 }, 5.9)
-        .to(".i-cam", { rotationY: 0, rotationX: 0, scale: 0.94, y: 0, duration: 1.3, ease: "power3.inOut" }, 5.55)
-        .to(".i-cam", { scale: 1.04, duration: 1.0, ease: "power1.out" }, 6.85)
-        .fromTo(".i-redsweep", { xPercent: -160, opacity: 0 }, { xPercent: 160, opacity: 1, duration: 1.4, ease: "power2.inOut" }, 5.9)
-        .fromTo(".i-sheen", { xPercent: -130 }, { xPercent: 130, duration: 1.1, ease: "power2.inOut" }, 6.4)
-        .to(".i-figs", { opacity: 0, duration: 0.3 }, 6.95)
-        .to(".i-wave", { opacity: 0, duration: 0.6 }, 6.6)
+        .to(".i-logo", { opacity: 1, clipPath: "circle(75% at 50% 27%)", duration: 1.1, ease: "power2.inOut" }, 4.9)
+        .to(".i-edge", { opacity: 1, duration: 0.6 }, 5.0)
+        .to(".i-cam", { rotationY: 0, rotationX: 0, scale: 0.94, y: 0, duration: 1.3, ease: "power3.inOut" }, 4.65)
+        .to(".i-cam", { scale: 1.04, duration: 1.0, ease: "power1.out" }, 5.95)
+        .fromTo(".i-redsweep", { xPercent: -160, opacity: 0 }, { xPercent: 160, opacity: 1, duration: 1.4, ease: "power2.inOut" }, 5.0)
+        .fromTo(".i-sheen", { xPercent: -130 }, { xPercent: 130, duration: 1.1, ease: "power2.inOut" }, 5.5)
+        .to(".i-figs", { opacity: 0, duration: 0.3 }, 6.05)
+        .to(".i-wave", { opacity: 0, duration: 0.6 }, 5.7)
 
         // SCENE 6 — logo flies into the navbar while the darkness irises open onto the hero
-        .add(announce, 7.4)
-        .to(".i-edge", { opacity: 0, duration: 0.4 }, 7.45)
+        .add(announce, 6.5)
+        .to(".i-edge", { opacity: 0, duration: 0.4 }, 6.55)
         .to(
           ".i-cam",
           {
@@ -169,10 +166,10 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
             duration: 1.05,
             ease: "power3.inOut",
           },
-          7.45,
+          6.55,
         )
-        .to(el, { "--hole": `${Math.hypot(window.innerWidth, window.innerHeight)}px`, duration: 1.1, ease: "power2.inOut" }, 7.5)
-        .to([".i-glow", ".i-skip"], { opacity: 0, duration: 0.6 }, 7.5);
+        .to(el, { "--hole": `${Math.hypot(window.innerWidth, window.innerHeight)}px`, duration: 1.1, ease: "power2.inOut" }, 6.6)
+        .to([".i-glow", ".i-skip"], { opacity: 0, duration: 0.6 }, 6.6);
 
       function target() {
         const nav = document.getElementById("nav-logo")?.getBoundingClientRect();
@@ -185,7 +182,7 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
         };
       }
 
-      if (lite) t.timeScale(1.2);
+      t.timeScale(lite ? 1.75 : 1.5); // ~5s desktop, ~4.4s mobile
     }, el);
     return () => ctx.revert();
   }, [announce, finish, onDone]);

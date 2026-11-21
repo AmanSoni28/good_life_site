@@ -84,7 +84,7 @@ export default function AboutSection() {
 
         <div className="relative h-[520px] sm:h-[640px] lg:col-span-5 lg:h-auto">
           <div className="a-img absolute right-0 top-0 h-[68%] w-[78%] overflow-hidden">
-            <Image src={`${A}/turf-area.jpg`} alt="The covered functional turf zone with battle ropes and plyo boxes" fill sizes="(min-width:1024px) 34vw, 78vw" className="object-cover" />
+            <Image src={`${A}/videos/strength-machines.jpg`} alt="Plate-loaded strength machines on the gym floor" fill sizes="(min-width:1024px) 34vw, 78vw" className="object-cover" />
           </div>
           <div className="a-img absolute bottom-0 left-0 h-[58%] w-[52%] overflow-hidden border-4 border-ink shadow-[0_30px_60px_rgba(0,0,0,.6)]">
             <Image src={`${A}/stills/deadlift.jpg`} alt="A member loading plates for a barbell lift" fill sizes="(min-width:1024px) 22vw, 52vw" className="object-cover" />

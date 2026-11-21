@@ -49,7 +49,7 @@ export default function TrainersSection() {
         scrollTrigger: {
           trigger: stage,
           start: "top top",
-          end: () => `+=${(N - 1) * window.innerHeight * 1.2}`,
+          end: () => `+=${(N - 1) * window.innerHeight * 0.5}`,
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
