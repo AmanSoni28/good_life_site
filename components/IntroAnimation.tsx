@@ -223,11 +223,14 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
       <div className="i-glow pointer-events-none absolute inset-0 opacity-0 [background:radial-gradient(ellipse_55%_45%_at_50%_55%,rgba(237,37,30,.22),transparent_70%),radial-gradient(ellipse_30%_25%_at_50%_45%,rgba(255,255,255,.05),transparent_70%)]" />
       <div className="i-sweep pointer-events-none absolute left-0 top-1/2 h-px w-full origin-left bg-gradient-to-r from-transparent via-brand to-transparent shadow-[0_0_18px_2px_rgba(237,37,30,.8)]" />
       <svg className="i-wave pointer-events-none absolute left-0 top-[60%] h-[120px] w-full -translate-y-1/2 opacity-0" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden>
-        <path d={WAVE} fill="none" stroke="#ED251E" strokeWidth="1.6" vectorEffect="non-scaling-stroke" style={{ filter: "drop-shadow(0 0 6px rgba(237,37,30,.9))" }} />
+        {/* wide faint stroke fakes the glow; a drop-shadow filter repaints on every dash frame */}
+        <path d={WAVE} fill="none" stroke="#ED251E" strokeOpacity=".3" strokeWidth="7" vectorEffect="non-scaling-stroke" />
+        <path d={WAVE} fill="none" stroke="#ED251E" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
       </svg>
       <div className="i-streak-w pointer-events-none will-change-transform absolute left-0 top-[46%] h-[2px] w-[45vw] bg-gradient-to-r from-transparent via-white to-transparent opacity-0 shadow-[0_0_20px_rgba(255,255,255,.9)]" />
       <div className="i-streak-r pointer-events-none will-change-transform absolute left-0 top-[54%] h-[2px] w-[45vw] bg-gradient-to-r from-transparent via-brand to-transparent opacity-0 shadow-[0_0_20px_rgba(237,37,30,.9)]" />
-      <div className="i-redsweep pointer-events-none absolute left-1/4 top-1/2 h-[70vmin] w-1/2 -translate-y-1/2 rounded-full bg-brand/40 opacity-0 blur-[90px] will-change-transform" />
+      {/* gradient instead of filter blur: a 90px blur re-rasterises every frame while it moves */}
+      <div className="i-redsweep pointer-events-none absolute left-1/4 top-1/2 h-[90vmin] w-1/2 -translate-y-1/2 opacity-0 will-change-transform [background:radial-gradient(closest-side,rgba(237,37,30,.4),rgba(237,37,30,.12)_55%,transparent)]" />
 
       <div className="absolute inset-0 grid place-items-center [perspective:1200px]">
         <div className="i-stage relative aspect-square w-[min(84vmin,620px)]">
@@ -245,15 +248,15 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
               />
             ))}
             <div className="i-figs absolute inset-0 [perspective:900px] [transform:translateZ(.5px)]">
-              {Array.from({ length: GHOSTS + 1 }, (_, i) => fig(`${A}/intro/female.png`, FEMALE, "i-f", i))}
-              {Array.from({ length: GHOSTS + 1 }, (_, i) => fig(`${A}/intro/male.png`, MALE, "i-m", i))}
+              {Array.from({ length: GHOSTS + 1 }, (_, i) => fig(`${A}/intro/female.webp`, FEMALE, "i-f", i))}
+              {Array.from({ length: GHOSTS + 1 }, (_, i) => fig(`${A}/intro/male.webp`, MALE, "i-m", i))}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`${A}/intro/chain.png`} alt="" className="i-chain absolute max-w-none select-none" style={CHAIN} draggable={false} />
+              <img src={`${A}/intro/chain.webp`} alt="" className="i-chain absolute max-w-none select-none" style={CHAIN} draggable={false} />
               <div className="i-ring pointer-events-none absolute left-1/2 top-[27%] h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-brand opacity-0 shadow-[0_0_40px_rgba(237,37,30,.7)]" />
             </div>
             <div className="i-logo absolute inset-0 overflow-hidden [transform:translateZ(1px)]" style={{ clipPath: "circle(0% at 50% 27%)" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`${A}/logo.png`} alt="Good Life Fitness Club" className="h-full w-full select-none" style={{ clipPath: `circle(${RING * 50}% at 50% 50%)` }} draggable={false} />
+              <img src={`${A}/logo-intro.webp`} alt="Good Life Fitness Club" className="h-full w-full select-none" style={{ clipPath: `circle(${RING * 50}% at 50% 50%)` }} draggable={false} />
               <div className="absolute rounded-full overflow-hidden mix-blend-overlay" style={{ inset: `${((1 - RING) / 2) * 100}%` }}>
                 <div className="i-sheen absolute inset-y-0 -left-1/4 w-[60%] -skew-x-12 bg-gradient-to-r from-transparent via-white/80 to-transparent" />
               </div>

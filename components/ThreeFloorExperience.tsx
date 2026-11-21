@@ -40,6 +40,7 @@ export default function ThreeFloorExperience() {
   const [visible, setVisible] = useState(false);
   const [gl, setGl] = useState<boolean | null>(null);
   const [lite, setLite] = useState(false);
+  const [introDone, setIntroDone] = useState(false);
   const ready = useRef(false); // building assembles only once the intro has handed over
 
   useEffect(() => {
@@ -47,7 +48,10 @@ export default function ThreeFloorExperience() {
     setLite(window.matchMedia("(max-width: 767px)").matches);
     const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { rootMargin: "200px" });
     io.observe(ref.current!.querySelector(".fl-pin")!);
-    const off = onIntroDone(() => (ready.current = true));
+    const off = onIntroDone(() => {
+      ready.current = true;
+      setIntroDone(true);
+    });
     return () => {
       io.disconnect();
       off();
@@ -132,7 +136,7 @@ export default function ThreeFloorExperience() {
       <div className="fl-pin relative h-[100svh] overflow-hidden">
         {/* 3D stage */}
         <div className="absolute inset-0">
-          {gl && <BuildingScene progress={progress} running={visible} lite={lite} ready={ready} />}
+          {gl && <BuildingScene progress={progress} running={visible} paused={!introDone} lite={lite} ready={ready} />}
           {gl === false && <Image src={`${A}/building.jpg`} alt="The Good Life Fitness Club building at dusk" fill priority sizes="100vw" className="object-contain object-right opacity-70" />}
         </div>
 
@@ -163,7 +167,7 @@ export default function ThreeFloorExperience() {
         {CARDS.map((c) => (
           <div key={c.n} className={`fl-hint fl-chrome pointer-events-none absolute z-10 hidden lg:block ${c.pos}`} aria-hidden>
             <div className="fl-card [animation:float_7s_ease-in-out_infinite]" style={{ animationDelay: c.d }}>
-              <div className="relative flex items-center gap-4 overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 shadow-[0_20px_50px_-15px_rgba(0,0,0,.9)] backdrop-blur-sm">
+              <div className="relative flex items-center gap-4 overflow-hidden rounded-xl border border-white/10 bg-black/55 px-4 py-3 shadow-[0_20px_50px_-15px_rgba(0,0,0,.9)]">
                 <span className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
                 <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full border border-gold/40 font-head text-[0.6rem] tracking-[0.15em] text-gold-light">
                   {c.n}
@@ -179,7 +183,7 @@ export default function ThreeFloorExperience() {
         ))}
 
         {/* light: drifting gold beams from above + warm glow behind the copy */}
-        <div className="fl-chrome pointer-events-none absolute inset-0 overflow-hidden mix-blend-screen" aria-hidden>
+        <div className="fl-chrome pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
           {[
             { left: "48%", w: "16vw", r: "18deg", d: "0s" },
             { left: "62%", w: "9vw", r: "24deg", d: "-4s" },
@@ -247,27 +251,6 @@ export default function ThreeFloorExperience() {
                   </div>
                 ))}
               </dl>
-              {/* heartbeat trace: cardio-monitor pulse under the stats */}
-              <div className="fl-in-fade mt-8 hidden max-w-md items-center gap-4 md:flex" aria-hidden>
-                <svg viewBox="0 0 240 40" className="h-9 flex-1 overflow-visible" fill="none" preserveAspectRatio="none">
-                  <path d="M0 20h70l8-12 10 26 10-34 9 30 6-10h45l6-6 6 6h60" stroke="rgba(255,255,255,.08)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-                  <path
-                    d="M0 20h70l8-12 10 26 10-34 9 30 6-10h45l6-6 6 6h60"
-                    pathLength={100}
-                    stroke="#ed251e"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
-                    className="[animation:ecg_2.4s_linear_infinite] [filter:drop-shadow(0_0_6px_rgba(237,37,30,.9))] [stroke-dasharray:22_100]"
-                  />
-                </svg>
-                <span className="flex shrink-0 items-center gap-2 font-head text-[0.6rem] uppercase tracking-[0.3em] text-mist">
-                  <svg width="14" height="12" viewBox="0 0 24 21" className="fill-brand [animation:heartbeat_1.2s_ease-in-out_infinite]">
-                    <path d="M12 21 1.8 10.8A6 6 0 0 1 12 2.5a6 6 0 0 1 10.2 8.3z" />
-                  </svg>
-                  Feel the pulse
-                </span>
-              </div>
             </div>
 
             {FLOORS.map((f) => (

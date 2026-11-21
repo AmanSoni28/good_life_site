@@ -353,12 +353,13 @@ function Building({ progress, built, lite, ready }: Shared & Ready & { lite: boo
   );
 }
 
-export default function BuildingScene({ progress, running, lite, ready }: Ready & { progress: RefObject<number>; running: boolean; lite: boolean }) {
+export default function BuildingScene({ progress, running, paused, lite, ready }: Ready & { progress: RefObject<number>; running: boolean; paused: boolean; lite: boolean }) {
   const built = useRef(lite ? 1 : 0);
   return (
     <Canvas
-      frameloop={running ? "always" : "never"}
-      dpr={lite ? [1, 1.5] : [1, 1.75]}
+      // "demand" while the intro covers it: renders once (compiles shaders) but leaves the GPU to the intro
+      frameloop={!running ? "never" : paused ? "demand" : "always"}
+      dpr={[1, 1.5]}
       camera={{ fov: 32, position: [8.6, 1.6, 13.6], near: 0.1, far: 120 }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
       onCreated={({ gl, scene }) => {

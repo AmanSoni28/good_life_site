@@ -88,6 +88,10 @@ html[data-intro="playing"] body {
 html[data-intro="playing"] #nav-logo {
   opacity: 0;
 }
+/* hidden behind the intro anyway: keep the GPU free for it */
+html[data-intro="playing"] main * {
+  animation-play-state: paused !important;
+}
 #nav-logo {
   transition: opacity 0.3s;
 }
@@ -288,15 +292,6 @@ html[data-intro="playing"] #nav-logo {
 }
 @keyframes marquee {
   to { transform: translateX(-50%); }
-}
-@keyframes ecg {
-  from { stroke-dashoffset: 122; }
-  to { stroke-dashoffset: 0; }
-}
-@keyframes heartbeat {
-  0%, 40%, 100% { transform: scale(1); }
-  15% { transform: scale(1.25); }
-  25% { transform: scale(0.95); }
 }
 @keyframes pulse-ring {
   0% { transform: scale(1); opacity: 0.55; }

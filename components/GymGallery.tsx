@@ -260,7 +260,7 @@ export default function GymGallery() {
       )}
 
       {open !== null && (
-        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/95 p-4 backdrop-blur" role="dialog" aria-modal="true" aria-label={PHOTOS[open].caption} onClick={close}>
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/95 p-4" role="dialog" aria-modal="true" aria-label={PHOTOS[open].caption} onClick={close}>
           <div className="relative h-[82vh] w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
             <Image src={`${A}/${PHOTOS[open].src}`} alt={PHOTOS[open].alt} fill sizes="100vw" className="object-contain" />
           </div>
